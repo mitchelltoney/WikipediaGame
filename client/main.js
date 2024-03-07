@@ -70,3 +70,21 @@ document.getElementById('wiki-form').addEventListener('submit', function(event) 
     });
 });
 console.log("Finished fetch request...");
+
+document.getElementById('abort-button').addEventListener('click', function(event) {
+    fetch('/abort', {
+        method: 'POST'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
