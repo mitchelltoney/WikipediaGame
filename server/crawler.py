@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import re
 
 TIMEOUT = 1200  # time limit in seconds for the search
+abort = False  # flag to abort the search
 
 def get_links(page_url):
     print(f"Fetching page: {page_url}")
@@ -25,7 +26,7 @@ def find_path(start_page, finish_page):
     # breadth first search
     start_time = time.time()
     elapsed_time = time.time() - start_time
-    while queue and elapsed_time < TIMEOUT:  
+    while queue and elapsed_time < TIMEOUT and not abort:  
         (vertex, path, depth) = queue.pop(0)
         for next in set(get_links(vertex)) - discovered:
             if next == finish_page:
