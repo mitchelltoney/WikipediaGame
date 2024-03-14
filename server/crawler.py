@@ -43,11 +43,11 @@ def find_path(start_page, finish_page):
                     logs.append(f"Discovered pages: {len(discovered)}")
                     if next in paths:
                         full_path = path + paths[next][::-1]  # concatenate the path from the start page to the common page with the reversed path from the finish page to the common page
+                        return full_path, logs, elapsed_time, len(discovered) # return with success
                     else:
                         logs.append(f"Key {next} not found in paths.")
                         print(f"Key {next} not found in paths.")
                         continue
-                    return full_path, logs, elapsed_time, len(discovered) # return with success
                 else:
                     log = f"Adding link to queue: {next} (depth {depth})"
                     print(log)
