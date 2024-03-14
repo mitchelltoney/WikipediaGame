@@ -19,30 +19,33 @@ def get_links(page_url):
     return links
 
 def find_path(start_page, finish_page):
-    queue = [(start_page, [start_page], 0)]
-    discovered = set()
+    queue_start = [(start_page, [start_page], 0)]
+    queue_finish = [(finish_page, [finish_page], 0)]
+    discovered_start = set()
+    discovered_finish = set()
     logs = []
 
     # breadth first search
     start_time = time.time()
     elapsed_time = time.time() - start_time
-    while queue and elapsed_time < TIMEOUT and not abort:  
-        (vertex, path, depth) = queue.pop(0)
-        for next in set(get_links(vertex)) - discovered:
-            if next == finish_page:
-                log = f"Found finish page: {next}"
-                print(log)
-                logs.append(log)
-                logs.append(f"Search took {elapsed_time} seconds.")
-                print(f"Search took {elapsed_time} seconds.")  # Add a print statement to log the elapsed time
-                logs.append(f"Discovered pages: {len(discovered)}")
-                return path + [next], logs, elapsed_time, len(discovered) # return with success
-            else:
-                log = f"Adding link to queue: {next} (depth {depth})"
-                print(log)
-                logs.append(log)
-                discovered.add(next)
-                queue.append((next, path + [next], depth + 1))
+    while queue_start and queue_finish and elapsed_time < TIMEOUT and not abort:  
+        for queue, discovered, other_discovered in [(queue_start, discovered_start, discovered_finish), (queue_finish, discovered_finish, discovered_start)]:
+            (vertex, path, depth) = queue.pop(0)
+            for next in set(get_links(vertex)) - discovered:
+                if next in other_discovered:
+                    log = f"Found common page: {next}"
+                    print(log)
+                    logs.append(log)
+                    logs.append(f"Search took {elapsed_time} seconds.")
+                    print(f"Search took {elapsed_time} seconds.")  # Add a print statement to log the elapsed time
+                    logs.append(f"Discovered pages: {len(discovered)}")
+                    return path, logs, elapsed_time, len(discovered) # return with success
+                else:
+                    log = f"Adding link to queue: {next} (depth {depth})"
+                    print(log)
+                    logs.append(log)
+                    discovered.add(next)
+                    queue.append((next, path + [next], depth + 1))
         elapsed_time = time.time() - start_time
     logs.append(f"Search took {elapsed_time} seconds.")
     print(f"Search took {elapsed_time} seconds.")  # Add a print statement to log the elapsed time
