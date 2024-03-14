@@ -13,15 +13,9 @@ limiter = Limiter(app=app, key_func=get_remote_address)
 def home():
     return send_from_directory(app.static_folder, 'index.html')
 
-@app.route('/abort', methods=['POST'])
-def abort():
-    crawler.abort = True
-    return jsonify({'message': 'Search aborted'})
-
 @app.route('/find_path', methods=['POST'])
 @limiter.limit(RATE_LIMIT)  # Use the new constant instead of the hardcoded rate limit
 def find_path():
-    crawler.abort = False
     try:
         data = request.get_json()
         start_page = data['start']
