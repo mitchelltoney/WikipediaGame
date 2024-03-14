@@ -1,7 +1,7 @@
-import time
 import requests
 from bs4 import BeautifulSoup
 import re
+import time
 
 TIMEOUT = 1200  # time limit in seconds for the search
 
@@ -20,7 +20,7 @@ def get_links(page_url):
 def find_path(start_page, finish_page):
     abort = False  # flag to abort the search
     logs = []
-    time = 0
+    elapsed_time = 0
     discovered = 0
     queue_start = [(start_page, [start_page], 0)]
     queue_finish = [(finish_page, [finish_page], 0)]
@@ -64,8 +64,8 @@ def find_path(start_page, finish_page):
     logs.append(f"Discovered pages: {len(discovered)}")
     raise TimeoutErrorWithLogs("Search exceeded time limit.", logs, elapsed_time, len(discovered))
 class TimeoutErrorWithLogs(Exception):
-    def __init__(self, message, logs, time, discovered):
+    def __init__(self, message, logs, elapsed_time, discovered):
         super().__init__(message)
         self.logs = logs
-        self.time = time
+        self.time = elapsed_time
         self.discovered = discovered
