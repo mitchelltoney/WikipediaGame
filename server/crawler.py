@@ -23,13 +23,15 @@ def find_path(start_page, finish_page):
     queue_finish = [(finish_page, [finish_page], 0)]
     discovered_start = set()
     discovered_finish = set()
+    paths_start = {start_page: [start_page]}
+    paths_finish = {finish_page: [finish_page]}
     logs = []
 
     # breadth first search
     start_time = time.time()
     elapsed_time = time.time() - start_time
     while queue_start and queue_finish and elapsed_time < TIMEOUT and not abort:  
-        for queue, discovered, other_discovered in [(queue_start, discovered_start, discovered_finish), (queue_finish, discovered_finish, discovered_start)]:
+        for queue, discovered, other_discovered, paths in [(queue_start, discovered_start, discovered_finish, paths_start), (queue_finish, discovered_finish, discovered_start, paths_finish)]:
             (vertex, path, depth) = queue.pop(0)
             for next in set(get_links(vertex)) - discovered:
                 if next in other_discovered:
@@ -39,13 +41,15 @@ def find_path(start_page, finish_page):
                     logs.append(f"Search took {elapsed_time} seconds.")
                     print(f"Search took {elapsed_time} seconds.")  # Add a print statement to log the elapsed time
                     logs.append(f"Discovered pages: {len(discovered)}")
-                    return path, logs, elapsed_time, len(discovered) # return with success
+                    full_path = path + paths[next][::-1]  # concatenate the path from the start page to the common page with the reversed path from the finish page to the common page
+                    return full_path, logs, elapsed_time, len(discovered) # return with success
                 else:
                     log = f"Adding link to queue: {next} (depth {depth})"
                     print(log)
                     logs.append(log)
                     discovered.add(next)
-                    queue.append((next, path + [next], depth + 1))
+                    paths[next] = path + [next]
+                    queue.append((next, paths[next], depth + 1))
         elapsed_time = time.time() - start_time
     logs.append(f"Search took {elapsed_time} seconds.")
     print(f"Search took {elapsed_time} seconds.")  # Add a print statement to log the elapsed time
