@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 import re
 
 TIMEOUT = 1200  # time limit in seconds for the search
-abort = False  # flag to abort the search
 
 def get_links(page_url):
     print(f"Fetching page: {page_url}")
@@ -19,7 +18,10 @@ def get_links(page_url):
     return links
 
 def find_path(start_page, finish_page):
+    abort = False  # flag to abort the search
     logs = []
+    time = 0
+    discovered = 0
     queue_start = [(start_page, [start_page], 0)]
     queue_finish = [(finish_page, [finish_page], 0)]
     discovered_start = set()
@@ -30,7 +32,7 @@ def find_path(start_page, finish_page):
     # breadth first search
     start_time = time.time()
     elapsed_time = time.time() - start_time
-    while queue_start and queue_finish and elapsed_time < TIMEOUT and not abort and not abort:  # Add abort condition to while loop
+    while queue_start and queue_finish and elapsed_time < TIMEOUT and not abort:  # Add abort condition to while loop
         for queue, discovered, other_discovered, paths in [(queue_start, discovered_start, discovered_finish, paths_start), (queue_finish, discovered_finish, discovered_start, paths_finish)]:
             (vertex, path, depth) = queue.pop(0)
             for next in set(get_links(vertex)) - discovered:
@@ -48,7 +50,7 @@ def find_path(start_page, finish_page):
                     else:
                         logs.append(f"Key {next} not found in paths.")
                         print(f"Key {next} not found in paths.")
-                        continue
+                        break
                 else:
                     log = f"Adding link to queue: {next} (depth {depth})"
                     print(log)
