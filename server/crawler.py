@@ -30,7 +30,7 @@ def find_path(start_page, finish_page):
     # breadth first search
     start_time = time.time()
     elapsed_time = time.time() - start_time
-    while queue_start and queue_finish and elapsed_time < TIMEOUT and not abort:  
+    while queue_start and queue_finish and elapsed_time < TIMEOUT and not abort and not abort:  # Add abort condition to while loop
         for queue, discovered, other_discovered, paths in [(queue_start, discovered_start, discovered_finish, paths_start), (queue_finish, discovered_finish, discovered_start, paths_finish)]:
             (vertex, path, depth) = queue.pop(0)
             for next in set(get_links(vertex)) - discovered:
@@ -43,6 +43,7 @@ def find_path(start_page, finish_page):
                     logs.append(f"Discovered pages: {len(discovered)}")
                     if next in paths:
                         full_path = path + paths[next][::-1]  # concatenate the path from the start page to the common page with the reversed path from the finish page to the common page
+                        abort = True  # Set abort flag to True
                         return full_path, logs, elapsed_time, len(discovered) # return with success
                     else:
                         logs.append(f"Key {next} not found in paths.")
