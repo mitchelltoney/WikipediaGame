@@ -59,6 +59,6 @@ I plan to use ChatGPT for assistance in using the Wikipedia API documentation.
 ## Progress
 I attempted to make a working version bi-directional BFS with a few detailed aider prompts but after 10 versions that ended up breaking, I decided I would need a different approach.
 
-| Table  |     TEST    |    FOrmat|        testing   |
-|----------------|----|------------|--------------------------------------------|
-| blablablablablablablablablablablablablablablablablablablablablablablablabla | blablablablablablablablablablablablablablablabla | blablablablablablablablablablablablablablablablablablablablabla | blablablablablablablablablablablablablablablabla |
+| Table  |     TEST    |    FOrmat |        testing   |
+|-------|----|------------|-----------------------------------|
+| blablablablablablablablablablablablabblablablablablablablabla | blablablablablablablablablablablablablablablabla | blablablablablablablablablablablablablablablablablablablablabla | blablablablablablablablablablablablablablablabla |
