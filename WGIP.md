@@ -1,4 +1,4 @@
-**Mitchell Toney** *(no group)*
+**Mitchell Toney** *(solo)*
 
 # Improvement Proposal
 Convert the current algorithm into a **bidirectional breadth-first search**. Also utilize wikipedia API instead of scraping for urls.
