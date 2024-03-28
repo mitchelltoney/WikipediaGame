@@ -43,3 +43,14 @@ Expand(queue, visitedThisSide, visitedOtherSide):
 
 GetLinks(page):
 ```
+
+# Milestones
+1. Rework the `find_paths` method from `crawler.py` to search from both the initial and final page.
+I plan to utilize aider, 6 degrees of wikipedia, and my current python knowledge to implement the changes for the first two milestones. I may need more resources for milestone two.
+Deadline: 04/11/24
+2. Allow for the completion of a path if there is a shared page that has been found during the search from both the start and final page. (harder part)
+Deadline: 04/25/24
+3. Utilize the Wikipedia API in the `get_links` method from `crawler.py` rather than url scraping for more efficiency.
+Deadline: 05/08/24
+I plan to use ChatGPT for assistance in using the Wikipedia API documentation.
+*Deadlines subject to change*
