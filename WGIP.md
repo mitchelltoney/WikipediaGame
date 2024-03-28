@@ -61,4 +61,4 @@ I attempted to make a working version bi-directional BFS with a few detailed aid
 
 | Table  |     TEST    |    FOrmat |        testing   |
 |-------|----|------------|-----------------------------------|
-| blablablablablablablablablablablablabblablablablablablablabla | blablablablablablablablablablablablablablablabla | blablablablablablablablablablablablablablablablablablablablabla | blablablablablablablablablablablablablablablabla |
+| blabl ablablablablablab lablablab lablabblabl ablablablabl ablabla | blablab lablabl ablabla blab lablablabl ablabla blabla | blablablab lablablabla blablab lablab lablablablabl ablablab lablabla | blabl ablabl ablabl ablablab lablabl ablablab labla bla |
