@@ -54,3 +54,6 @@ Deadline: 04/25/24
 Deadline: 05/08/24
 I plan to use ChatGPT for assistance in using the Wikipedia API documentation.
 *Deadlines subject to change*
+
+# Progress
+I attempted to make a working version bi-directional BFS with a few detailed aider prompts but after 10 versions that ended up breaking, I decided I would need a different approach.
