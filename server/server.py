@@ -25,6 +25,7 @@ def find_path():
 
         elapsed_time = logs[-1]
         response_data = {'path': path, 'logs': logs, 'time': time, 'discovered': discovered}
+        print("Completed path from start page to finish page: ", path)
         print(response_data)
         return jsonify(response_data)
     except crawler.TimeoutErrorWithLogs as e:
