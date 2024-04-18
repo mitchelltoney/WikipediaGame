@@ -5,6 +5,15 @@ document.getElementById('wiki-form').addEventListener('submit', function(event) 
     var startPage = document.getElementById('start-page').value;
     var finishPage = document.getElementById('finish-page').value;
 
+    var searchProgressElement = document.getElementById('search-progress');
+    searchProgressElement.innerHTML = ''; // Clear previous search progress
+
+    var eventSource = new EventSource('/search_progress');
+    eventSource.onmessage = function(event) {
+        var log = event.data;
+        searchProgressElement.innerHTML += log + '<br>';
+    };
+
     console.log("Sending fetch request...");
     fetch('/find_path', {
         method: 'POST',
@@ -67,6 +76,7 @@ document.getElementById('wiki-form').addEventListener('submit', function(event) 
         statsHtml += '<li>Number of discovered pages: ' + data.discovered + '</li>';
         statsHtml += '</ul>';
         statsElement.innerHTML = statsHtml;
+        eventSource.close();
     });
 });
 console.log("Finished fetch request...");
