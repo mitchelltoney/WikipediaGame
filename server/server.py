@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory, Response
+from flask import Flask, request, jsonify, send_from_directory, stream_with_context, Response
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import crawler
@@ -13,6 +13,13 @@ limiter = Limiter(app=app, key_func=get_remote_address)
 def home():
     return send_from_directory(app.static_folder, 'index.html')
 
+@app.route('/search_progress')
+def search_progress():
+    def generate():
+        for log in logs:
+            yield f"data: {log}\n\n"
+    return Response(stream_with_context(generate()), mimetype='text/event-stream')
+    
 @app.route('/find_path', methods=['POST'])
 @limiter.limit(RATE_LIMIT)  # Use the new constant instead of the hardcoded rate limit
 def find_path():
