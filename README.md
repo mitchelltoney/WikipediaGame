@@ -1,7 +1,5 @@
 # WikipediaGame
 
-<!--At the time of this writing available at http://192.168.16.72:5000/ from inside the Chapman network.-->
-At the time of this writing available at https://wikipiediagame.azurewebsites.net/ 
 ## Installation
 
 (these instructions should work under GNU/Linux and Macos and WSL)
@@ -9,7 +7,7 @@ At the time of this writing available at https://wikipiediagame.azurewebsites.ne
 Prerequisites: Python
 
 ```
-git clone https://github.com/alexhkurz/WikipediaGame.git
+git clone https://github.com/mitchelltoney/WikipediaGame.git
 cd WikipediaGame/server
 source setup.sh
 ```
@@ -20,36 +18,18 @@ Starting the server:
 python server.py
 ```
 
-(For development one may want to use `watchmedo auto-restart -d . -p '*.py' -- python server.py`.)
 
-Play the game on [`localhost:5000`](http://127.0.0.1:5000/) (this link will only work after you started the server on your machine (watch the console in case the port number changed to eg `5001`)).
-
-## Limitations
-
-- The UI works as expected only for chrome-based browsers (Chrome, Brave, ...).
-- Only tested for pages that are no further than two hops away. 
-- Only works for wikipedia pages.
-- Implemented via HTTP requests (no websocket connection between client and server).
-- Users are identified by IP adress (no cookies or sessions).
-- ...
-
-## Parameters
-
-- `RATELIMIT` in `server.py`.
-- `TIMEOUT` in `crawler.py`.
-
-## Further Ideas
-
-- Improve the efficiency of the search.
-- Add heuristics for faster search.
-- Use LLMs to make better guesses, resulting in faster search.
-- ...
-
-## Branches
-
-- `version1` computes the shortest path betwen two wikipedia pages
-- `version2` (=`main`) additionally displays all pages visited during the computation
-- `dev` will output the pages being visited in real time (under development)
+Play the game on [`localhost:5001`](http://127.0.0.1:5001/) (this link will only work after you started the server on your machine (watch the console in case the port number changed to eg `5000`)).
 
 
+## Description
+
+- The `crawler.py` file was modified to utilize the Wikipedia API in order to obtain forward and backwards links for any wikipedia pages. Two methods were implemented in order to request these links from the API.
+- The `find_path` method from `crawler.py` was modified in order to utilize both the forwards links and back links to create two seperate queues for each direction. This search algorithm is labeled **bidirectional breadth-first search** It simultaneously searches from both the `start_page` and the `finish_page` in order to find a page that has been reached in both queues. It then constructs the complete path in the form of forward links.
+
+## Project Testing
+
+- Run the installation steps above to start the server, the go to the game at the printed link. 
+- In the game UI, enter two wikipedia page links in both the "Start Page URL:" and "Finish Page URL:" fields. 
+- The `crawler.py` should find a path between these two pages and print out each of the wikipedia page titles to represent the path (path construction sometimes broken)
 

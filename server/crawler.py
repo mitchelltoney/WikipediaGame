@@ -92,7 +92,7 @@ def find_path(start_page, finish_page):
             current_title, path = forward_queue.pop(0)
             for next_title in set(get_links_api(current_title)) - forward_discovered:
                 if next_title == finish_title:
-                    complete_path = path + [next_title]  # Add the next page to the path
+                    complete_path = path + [next_title]
                     return complete_path, logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
                 forward_discovered.add(next_title)
                 forward_queue.append((next_title, path + [next_title]))
@@ -103,14 +103,13 @@ def find_path(start_page, finish_page):
             current_title, path = backward_queue.pop(0)
             for next_title in set(get_backlinks_api(current_title)) - backward_discovered:
                 if next_title in forward_discovered:
-                    # Find the path in the forward queue where the connection was found
                     forward_path = next((item[1] for item in forward_queue if item[0] == next_title), None)
                     if forward_path is not None:
-                        complete_path = forward_path + path[::-1][1:]  # Combine paths, avoiding duplicate meeting point
+                        complete_path = forward_path + path[::-1][1:]
                         return complete_path, logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
                 backward_discovered.add(next_title)
                 backward_queue.append((next_title, path + [next_title]))
                 logs.append(f"Explored backward: {next_title}")
 
-    # If the search completes without finding a path
+
     return [], logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
