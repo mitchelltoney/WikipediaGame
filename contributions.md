@@ -32,5 +32,8 @@ This same search took around 30 seconds for the forward search which used scrapi
 | Kitten -> Germany | 24 seconds | 25 seconds |
 | Diamond -> Computer | 3 seconds | 29 seconds |
 
-Change
+All of these tests were run on a MacBook Pro 2020 with 2 GHz Quad-Core Intel Core i5 processor and 16 GB 3733 MHz LPDDR4X RAM.
 
+It was odd that the bidirectional search took 24 seconds to find a path from *Kitten* to *Germany*, which was about the same performance as the original search algorithm, but for most other search paths it was much faster.
+
+Any of these can be used as **sample inputs** but any valid wikipedia pages will work as well.
