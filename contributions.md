@@ -25,7 +25,7 @@ Took around *6.5 seconds* to find the path of length 4 (s,m,m,f) with bidirectio
 
 This same search took around 30 seconds for the forward search which used scraping to find web pages.
 
-| Path | Steak -> Mathematics | x -> x | x -> x|
+| Path | Steak -> Mathematics | x -> x | x -> x |
 | --- | --- | --- |
 | **Bidirectional** | 6.5 seconds | 30 seconds |
 | Forward(Original) | 30 seconds | 30 seconds |
