@@ -27,7 +27,7 @@ This same search took around 30 seconds for the forward search which used scrapi
 
 | Path | **Bidirectional** | Forward(Original) |
 | ---- | ----------------- | ----------------- |
-|Steak -> Mathematics|| 6.5 seconds | 30 seconds |
+| Steak -> Mathematics|| 6.5 seconds | 30 seconds |
 | Couch -> Abstraction | 3.2 seconds | 32 seconds |
 | Kitten -> Germany | 24 seconds | 25 seconds |
 | Diamond -> Computer | 3 seconds | 29 seconds |
