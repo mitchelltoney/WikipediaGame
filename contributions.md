@@ -20,6 +20,7 @@ The find path algorithm was modified to use two queues and two sets in order to 
 Common benchmark tests that I would run would be between two wikipedia pages of common noun, as they were the easiest to find link titles of when checking the path.
 
 Example: **Steak -> Mathematics**
+
 Took around *6.5 seconds* to find the path of length 4 (s,m,m,f) with bidirectional search.
 
 This same search took around 30 seconds for the forward search which used scraping to find web pages.
