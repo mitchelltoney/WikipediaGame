@@ -35,7 +35,7 @@ Play the game on [`localhost:5001`](http://127.0.0.1:5001/) (this link will only
 
 ## Limitations and Future Work
 
-- It seems as though the API occasionally is not correctly representing the titles webpages as sometimes there will be an outputted path, found with the `find_path` algorithm, that does not seem to connect through the wikipedia pages, despite it logically making sense to exist. This makes me think that the link does exist and that the title is wrong, or maybe that the link was recently removed from the wikipedia page, or maybe not able to be found with my "cmd+F" search for the page. I of course tried to fix this but was not able to do so. This would be the first thing I would want to fix in the future
+- It seems as though the API occasionally is not correctly representing the titles webpages as sometimes there will be an outputted path, found with the `find_path` algorithm, that does not seem to connect through the wikipedia pages, despite it logically making sense to exist. This makes me think that the link does exist and that the title is wrong, or maybe that the link was recently removed from the wikipedia page, or maybe not able to be found with my *"cmd+F"* search for the page. I of course tried to fix this but was not able to do so. This would be the first thing I would want to fix in the future
 
 - Updating the UI of the website to be more interactive or entertaining could be an addition to make the game more fun, although not relating to the speed or efficiency of the algorithm.
 
