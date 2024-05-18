@@ -74,11 +74,11 @@ def find_path(start_page, finish_page):
     start_title = extract_title_from_url(start_page)
     finish_title = extract_title_from_url(finish_page)
 
-    forward_queue = [(start_title, [start_title])]
-    backward_queue = [(finish_title, [finish_title])]
+    forward_queue = [(start_title, [start_page])]
+    backward_queue = [(finish_title, [finish_page])]
     forward_discovered = {start_title}
     backward_discovered = {finish_title}
-    logs = []  # Initialize logs
+    logs = []
 
     start_time = time.time()
 
@@ -87,29 +87,34 @@ def find_path(start_page, finish_page):
         if elapsed_time >= TIMEOUT:
             raise TimeoutErrorWithLogs("Search exceeded time limit.", logs, elapsed_time, len(forward_discovered) + len(backward_discovered))
 
-        # Forward search
-        if forward_queue:
-            current_title, path = forward_queue.pop(0)
-            for next_title in set(get_links_api(current_title)) - forward_discovered:
-                if next_title == finish_title:
-                    complete_path = path + [next_title]
-                    return complete_path, logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
-                forward_discovered.add(next_title)
-                forward_queue.append((next_title, path + [next_title]))
-                logs.append(f"Explored forward: {next_title}")
+        current_title, path = forward_queue.pop(0)
+        for next_title in set(get_links_api(current_title)) - forward_discovered:
+            next_page = f"https://en.wikipedia.org/wiki/{format_title_for_url(next_title)}"
+            if next_title == finish_title:
+                complete_path = path + [next_page]
+                return complete_path, logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
+            if next_title in backward_discovered:
+                connecting_page = next_page
+                backward_path = next(p for t, p in backward_queue if t == next_title)
+                complete_path = path + backward_path[::-1]
+                return complete_path, logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
+            forward_discovered.add(next_title)
+            forward_queue.append((next_title, path + [next_page]))
+            logs.append(f"Explored forward: {next_page}")
 
-        # Backward search
-        if backward_queue:
-            current_title, path = backward_queue.pop(0)
-            for next_title in set(get_backlinks_api(current_title)) - backward_discovered:
-                if next_title in forward_discovered:
-                    forward_path = next((item[1] for item in forward_queue if item[0] == next_title), None)
-                    if forward_path is not None:
-                        complete_path = forward_path + path[::-1][1:]
-                        return complete_path, logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
-                backward_discovered.add(next_title)
-                backward_queue.append((next_title, path + [next_title]))
-                logs.append(f"Explored backward: {next_title}")
-
+        current_title, path = backward_queue.pop(0)
+        for next_title in set(get_backlinks_api(current_title)) - backward_discovered:
+            next_page = f"https://en.wikipedia.org/wiki/{format_title_for_url(next_title)}"
+            if next_title == start_title:
+                complete_path = [next_page] + path[::-1]
+                return complete_path, logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
+            if next_title in forward_discovered:
+                connecting_page = next_page
+                forward_path = next(p for t, p in forward_queue if t == next_title)
+                complete_path = forward_path + path[::-1]
+                return complete_path, logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
+            backward_discovered.add(next_title)
+            backward_queue.append((next_title, path + [next_page]))
+            logs.append(f"Explored backward: {next_page}")
 
     return [], logs, elapsed_time, len(forward_discovered) + len(backward_discovered)
